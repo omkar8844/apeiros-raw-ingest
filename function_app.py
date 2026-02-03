@@ -5,8 +5,13 @@ from datetime import datetime, timezone
 
 app = func.FunctionApp()
 
-@app.timer_trigger(schedule="0 */5 2-16 * * *", arg_name="myTimer", run_on_startup=True,
-              use_monitor=True) 
+@app.function_name(name="raw_api_ingest_cidc_v1")
+@app.timer_trigger(
+    schedule="0 */5 2-16 * * *", 
+    arg_name="myTimer", 
+    run_on_startup=True,
+    use_monitor=True
+)
 def raw_api_ingest_cidc_v1(myTimer: func.TimerRequest) -> None:
     if myTimer.past_due:
         logging.info('The timer is past due!')
